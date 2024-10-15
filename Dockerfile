@@ -1,6 +1,10 @@
 # Базовый образ
 FROM ubuntu:20.04
 
+# Устанавливаем часовой пояс автоматически
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Обновляем и устанавливаем зависимости
 RUN apt-get update && apt-get install -y \
     build-essential \
