@@ -1,11 +1,26 @@
-FROM node:18-alpine
+# Базовый образ
+FROM ubuntu:20.04
 
-WORKDIR /app
+# Обновляем и устанавливаем зависимости
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    cmake \
+    pkg-config \
+    libssl-dev \
+    libsqlite3-dev
 
-COPY package*.json ./
+# Клонируем репозиторий Jami bootstrap
+RUN git clone https://git.jami.net/savoirfairelinux/jami-bootstrap.git /opt/jami-bootstrap
 
-RUN npm install
+# Переходим в директорию проекта
+WORKDIR /opt/jami-bootstrap
 
-COPY . .
+# Собираем проект
+RUN cmake . && make
 
-CMD ["npm", "run", "start"]
+# Открываем нужный порт (по умолчанию 8443)
+EXPOSE 8443
+
+# Запускаем bootstrap сервер
+CMD ["./bootstrap"]
