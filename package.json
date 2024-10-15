@@ -1,0 +1,16 @@
+{
+  "name": "jami-bootstrap-server",
+  "version": "1.0.0",
+  "description": "Jami Bootstrap Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "jami-bootstrap": "^1.0.0" // Replace with the correct version
+  },
+  "devDependencies": {
+    "fly": "^0.0.42"
+  }
+}
