@@ -4,19 +4,19 @@ FROM ubuntu:20.04
 # Устанавливаем необходимые зависимости
 RUN apt-get update && apt-get install -y \
     curl \
-    gnupg \
+    gnupg2 \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
-# Добавляем репозиторий Jami и ключ
+# Добавляем ключи и репозиторий Jami
 RUN curl -fsSL https://dl.jami.net/nightly/ubuntu_20.04/jami.asc | gpg --dearmor -o /usr/share/keyrings/jami.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/jami.gpg] https://dl.jami.net/nightly/ubuntu_20.04/ ring main" > /etc/apt/sources.list.d/jami.list
 
-# Устанавливаем Jami
+# Обновляем список пакетов и устанавливаем jami-daemon
 RUN apt-get update && apt-get install -y jami-daemon && rm -rf /var/lib/apt/lists/*
 
-# Открываем порт
+# Открываем порт для Jami bootstrap сервера
 EXPOSE 4222
 
-# Запуск Jami
+# Запуск Jami bootstrap сервера
 CMD ["jami-daemon"]
