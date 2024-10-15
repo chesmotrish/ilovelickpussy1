@@ -8,6 +8,4 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 4222
-
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
