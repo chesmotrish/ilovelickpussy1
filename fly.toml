@@ -1,16 +1,9 @@
-app = "jami-bootstrap"
-primary_region = "fra" # или другой ближайший регион
-[build]
-  dockerfile = "./Dockerfile"
+app = "jami-bootstrap-server"
 
 [[services]]
   internal_port = 4222
   protocol = "tcp"
 
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls"]
-    port = 443
+[[http_services]]
+  port = 80
+  service = "jami-bootstrap-server"
