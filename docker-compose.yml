@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  jami-bootstrap-server:
+    build: .
+    ports:
+      - "80:4222" # Expose port 80 on the host to port 3000 in the container
+    restart: unless-stopped # Restart the container if it stops unexpectedly
