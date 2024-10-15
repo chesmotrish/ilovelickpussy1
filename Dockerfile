@@ -1,17 +1,26 @@
+# Используем базовый образ Ubuntu
 FROM ubuntu:20.04
 
-# Установка необходимых пакетов
+# Обновляем систему и устанавливаем необходимые зависимости
 RUN apt-get update && apt-get install -y \
-    jami-daemon \
     curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    gnupg \
+    lsb-release \
+    ca-certificates \
+    software-properties-common
 
-# Конфигурация bootstrap сервера
-COPY bootstrap.conf /etc/jami/bootstrap.conf
+# Добавляем репозиторий Jami
+RUN echo "deb [signed-by=/usr/share/keyrings/jami.asc.gpg] https://dl.jami.net/nightly/ubuntu_20.04/ ring main" | tee /etc/apt/sources.list.d/jami.list > /dev/null && \
+    curl -fsSL https://dl.jami.net/nightly/ubuntu_20.04/jami.asc | tee /usr/share/keyrings/jami.asc.gpg > /dev/null
 
-# Открытие порта для соединений
+# Устанавливаем Jami Daemon (серверную часть)
+RUN apt-get update && apt-get install -y jami-daemon
+
+# Открываем необходимый порт для Jami bootstrap сервера (например, 4222)
 EXPOSE 4222
 
-# Запуск сервера
-CMD ["jami-daemon", "-c", "/etc/jami/bootstrap.conf"]
+# Копируем конфигурационный файл для bootstrap сервера (если нужен)
+# COPY bootstrap.conf /etc/jami/bootstrap.conf
+
+# Запуск bootstrap сервера Jami
+CMD ["jami-daemon"]
