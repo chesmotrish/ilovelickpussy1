@@ -1,9 +1,15 @@
 app = "jami-bootstrap-server"
 
 [[services]]
-  internal_port = 4222
+  internal_port = 3000
   protocol = "tcp"
+  # Optional: Set a specific name for your service
+  # name = "my-service"
 
 [[http_services]]
+  # Expose port 80 to the public internet
+  # (for http traffic)
   port = 80
-  service = "jami-bootstrap-server"
+  # Set the service name you defined in `[[services]]` above
+  # if you have multiple services running
+  # service = "my-service"
