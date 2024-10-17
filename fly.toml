@@ -1,0 +1,23 @@
+app = "jami-bootstrap-node"
+
+# Настройки для развертывания
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  JAMI_BOOTSTRAP = "1"
+
+[[services]]
+  internal_port = 4222
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls"]
+    port = 443
+
+[experimental]
+  auto_rollback = true
