@@ -24,14 +24,18 @@ RUN apt-get update && \
     uuid-dev \
     libqrencode-dev \
     libminiupnpc-dev \
-    curl
+    curl \
+    pkg-config \
+    gdb \
+    lcov \
+    wget \
+    ninja-build
 
 # Клонируем репозиторий Jami
 RUN git clone https://git.jami.net/savoirfairelinux/jami-daemon.git /jami-daemon
 
-# Компилируем и устанавливаем Jami Daemon
+# Переключаемся в директорию Jami Daemon
 WORKDIR /jami-daemon
-RUN cmake . && make && make install
 
-# Запуск bootstrap ноды
-ENTRYPOINT ["jami-daemon"]
+# Запуск компиляции с использованием Ninja вместо Make для большей скорости и совместимости
+RUN cmake -G Ninja . && ninja && ninja install
