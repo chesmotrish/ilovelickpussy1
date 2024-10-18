@@ -1,7 +1,17 @@
+# Уникальное имя приложения на Fly.io
+app = "simplex-server"
+
+# Параметры образа
+[build]
+  # Здесь Fly.io автоматически построит образ из Dockerfile
+  dockerfile = "Dockerfile"
+
+# Настройка служб
 [[services]]
   internal_port = 5222
   protocol = "tcp"
 
+  # Публичные порты и обработчики
   [[services.ports]]
     port = 80
     handlers = ["http"]
