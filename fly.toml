@@ -1,31 +1,7 @@
-app = "your-app-name"
-
-[build]
-  # Укажите путь к Dockerfile
-  dockerfile = "Dockerfile"
-
-[env]
-  # Настройки окружения для вашей ноды, если нужно
-  IPFS_PATH = "/data/ipfs"
-
-[mounts]
-  # Настройка тома для хранения данных IPFS (чтобы данные сохранялись между перезагрузками)
-  source = "ipfs_data"
-  destination = "/data/ipfs"
-
 [[services]]
-  internal_port = 4001
+  internal_port = 5222
   protocol = "tcp"
-  
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "80"
 
   [[services.ports]]
-    handlers = ["tls"]
-    port = "443"
-  
-  [services.concurrency]
-    type = "connections"
-    hard_limit = 25
-    soft_limit = 20
+    port = 80
+    handlers = ["http"]
