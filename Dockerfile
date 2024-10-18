@@ -1,4 +1,9 @@
+# Используем базовый образ IPFS
 FROM ipfs/go-ipfs:latest
 
-EXPOSE 4001 5001 8080
-CMD ["ipfs", "daemon"]
+# Открываем необходимые порты
+EXPOSE 4001/tcp 4001/udp 5001 8080
+
+# Настраиваем команду для запуска IPFS
+CMD ["ipfs", "daemon", "--enable-gc", "--migrate=true"]
+
